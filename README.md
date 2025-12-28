@@ -71,6 +71,17 @@ try –strict for enhanced checking):
 
 ```
 
+```py
+def main():
+    parser = ConfigParser("config.txt")
+    parser.parse()
+    config = parser.validate()
+
+    maze = MazeGenerator(config).generate()
+    OutputEncoder().write(maze, config.output_file)
+    Renderer().render_ascii(maze)
+```
+
 # Repository Architecture:
 ```sh
 .
@@ -153,7 +164,7 @@ mypy . --strict
 ```py
 from mazegen import MazeGenerator
 ```
-18. explain all config file Keys
+18. ✅ explain all config file Keys
     ```py
     config = {
         "width": 20,
@@ -209,42 +220,6 @@ def main() -> None:
     path = MazeSolver.solve(maze)
     OutputEncoder.write(maze, path, config.output_file)
     Renderer.display(maze, path)
-```
-
-```py
-VALID_KEYS = {"WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE", "PERFECT", "SEED"}
-
-def parse_config(path: str) -> Config:
-    values = {}
-    with open(path, "r", encoding="utf-8") as f:
-        for lineno, raw in enumerate(f, start=1):
-            line = raw.strip()
-            if not line or line.startswith("#"):
-                continue
-            if "=" not in line:
-                raise ConfigError(f"Line {lineno}: invalid format")
-            key, value = map(str.strip, line.split("=", 1))
-
-            if key not in VALID_KEYS:
-                raise ConfigError(f"Line {lineno}: unknown configuration key '{key}'")
-
-            if key in values:
-                raise ConfigError(f"Line {lineno}: duplicate key '{key}'")
-
-            values[key] = parse_value(key, value, lineno)
-    return build_config(values)
-
-```
-
-```py
-VALID_ALGORITHMS = {"Prim", "Kruskal", "RecursiveBacktracker"}
-VALID_DISPLAY_MODES = {"ASCII", "MLX"}
-
-if key == "ALGORITHM" and value not in VALID_ALGORITHMS:
-    raise ConfigError(f"Line {lineno}: invalid algorithm '{value}'")
-
-if key == "DISPLAY_MODE" and value not in VALID_DISPLAY_MODES:
-    raise ConfigError(f"Line {lineno}: invalid display mode '{value}'")
 ```
 
 ```

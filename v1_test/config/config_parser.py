@@ -1,39 +1,6 @@
 #!/usr/bin/env python3
-import sys
-from typing import Tuple, Optional
-
-
-class ConfigError(Exception):
-    """Raised when there is a problem with the configuration file."""
-    pass
-
-
-class Config:
-    """
-    Docstring for Config
-    """
-    def __init__(
-            self,
-            width: int,
-            height: int,
-            entry: Tuple[int, int],
-            exit: Tuple[int, int],
-            output_file: str,
-            perfect: bool,
-            seed: Optional[int] = None,
-            algorithm: Optional[str] = None,
-            display_mode: Optional[str] = None
-
-    ) -> None:
-        self.width = width
-        self.height = height
-        self.entry = entry
-        self.exit = exit
-        self.output_file = output_file
-        self. perfect = perfect
-        self.seed = seed
-        self.algorithm = algorithm
-        self.display_mode = display_mode
+from config.exceptions import ConfigError
+from config.models import Config
 
 
 class ConfigParser:
@@ -43,7 +10,7 @@ class ConfigParser:
     def __init__(self, path: str) -> None:
         self.path = path
         self.values = {}
-    
+
     def parse(self) -> Config:
         VALID_ALGORITHMS = {"dfs", "prim", "kruskal", "recursive_backtracker"}
         VALID_DISPLAY_MODES = {"ASCII", "MLX"}
@@ -161,61 +128,3 @@ class ConfigParser:
             algorithm=self.values.get("ALGORITHM"),
             display_mode=self.values.get("DISPLAY_MODE"),
         )
-
-
-def ft_build_config(values: dict) -> Config:
-    """
-    Docstring for build_config
-    """
-
-    return Config(
-        width=values["WIDTH"],
-        height=values["HEIGHT"],
-        entry=values["ENTRY"],
-        exit=values["EXIT"],
-        output_file=values["OUTPUT_FILE"],
-        perfect=values["PERFECT"],
-        seed=values.get("SEED"),
-        algorithm=values.get("ALGORITHM"),
-        display_mode=values.get("DISPLAY_MODE"),
-    )
-
-
-
-
-
-
-
-
-def main() -> None:
-    if len(sys.argv) != 2:
-        print("Error: expected exactly one configuration file,",
-              f"got {len(sys.argv)-1}.")
-        print("Usage: python a_maze_ing.py <config_file>")
-        sys.exit(1)
-    try:
-        parser = ConfigParser(sys.argv[1])
-        parser.parse()
-        parser.validate()
-        config = parser.get_values()
-        print(f"config : {config.__dict__})")
-    except FileNotFoundError:
-        print("Error: configuration file not found", file=sys.stderr)
-        sys.exit(1)
-    except PermissionError:
-        print("Error: permission denied when reading config file",
-              file=sys.stderr)
-        sys.exit(1)
-    except ConfigError as e:
-        print(f"Config error: {e}", file=sys.stderr)
-        sys.exit(1)
-    except ValueError as e:
-        print(f"Value error: {e}", file=sys.stderr)
-        sys.exit(1)
-    except Exception as e:
-        print(f"Unexpected error: {e}", file=sys.stderr)
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
