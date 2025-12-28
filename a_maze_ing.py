@@ -20,7 +20,10 @@ class Config:
             exit: Tuple[int, int],
             output_file: str,
             perfect: bool,
-            seed: Optional[int] = None
+            seed: Optional[int] = None,
+            algorithm: Optional[str] = None,
+            display_mode: Optional[str] = None
+
     ) -> None:
         self.width = width
         self.height = height
@@ -29,13 +32,61 @@ class Config:
         self.output_file = output_file
         self. perfect = perfect
         self.seed = seed
+        self.algorithm = algorithm
+        self.display_mode = display_mode
+
+
+def ft_build_config(values: dict) -> Config:
+    """
+    Docstring for build_config
+    """
+
+    return Config(
+        width=values["WIDTH"],
+        height=values["HEIGHT"],
+        entry=values["ENTRY"],
+        exit=values["EXIT"],
+        output_file=values["OUTPUT_FILE"],
+        perfect=values["PERFECT"],
+        seed=values.get("SEED"),
+        algorithm=values.get("ALGORITHM"),
+        display_mode=values.get("DISPLAY_MODE"),
+    )
+
+
+def ft_validate_config(values: dict) -> None:
+    """
+    Docstring for ft_validate_config
+    """
+    required_keys = {"WIDTH", "HEIGHT", "ENTRY", "EXIT",
+                     "OUTPUT_FILE", "PERFECT"}
+    missing_keys = required_keys - values.keys()
+    if missing_keys:
+        raise ConfigError(f"Missing required keys: {', '.join(missing_keys)}")
+    if values["ENTRY"] == values["EXIT"]:
+        raise ConfigError("ENTRY and EXIT must be different")
+    x_entry, y_entry = values["ENTRY"]
+    x_exit, y_exit = values["EXIT"]
+    if not (0 <= x_entry < values["WIDTH"]
+            and 0 <= y_entry < values["HEIGHT"]):
+        raise ConfigError("ENTRY coordinates out of bounds")
+    if not (0 <= x_exit < values["WIDTH"] and 0 <= y_exit < values["HEIGHT"]):
+        raise ConfigError("EXIT coordinates out of bounds")
+    if "WIDTH" in values and "HEIGHT" in values:
+        if values["WIDTH"] < 5 or values["HEIGHT"] < 5:
+            raise ConfigError("'WIDTH' and 'HEIGHT' must be at least 5")
+        if values["WIDTH"] > 1000 or values["HEIGHT"] > 1000:
+            raise ConfigError("'WIDTH' and 'HEIGHT' must not exceed 1000")
+    output_file = values.get("OUTPUT_FILE", "")
+    if not output_file.endswith(".txt"):
+        raise ConfigError("OUTPUT_FILE must end with '.txt'")
 
 
 def ft_parse_config(path: str) -> Config:
     """
     Docstring for ft_parse_config
     """
-    VALID_ALGORITHMS = {"prim", "kruskal", "recursive_backtracker"}
+    VALID_ALGORITHMS = {"dfs", "prim", "kruskal", "recursive_backtracker"}
     VALID_DISPLAY_MODES = {"ASCII", "MLX"}
     VALID_KEYS = {
         "WIDTH",
@@ -50,10 +101,11 @@ def ft_parse_config(path: str) -> Config:
     }
     values = {}
 
-    with open(sys.path, "r", encoding="utf-8") as f:
+    with open(path, "r", encoding="utf-8") as f:
         for index, raw in enumerate(f, start=1):
             line = raw.strip()
-            if not line or line.startwith("#"):
+            line = line.split("#", 1)[0].strip()
+            if not line or line.startswith("#"):
                 continue
             if "=" not in line:
                 raise ConfigError(f"Line {index}: invalid format")
@@ -106,12 +158,14 @@ def ft_parse_config(path: str) -> Config:
                 if value.lower() not in VALID_ALGORITHMS:
                     raise ConfigError(f"Line {index}:",
                                       f"invalid algorithm '{value}'")
-                values[key] = value
+                values[key] = value.lower()
             elif key == "DISPLAY_MODE":
-                if value.lower() not in VALID_DISPLAY_MODES:
+                if value.upper() not in VALID_DISPLAY_MODES:
                     raise ConfigError(f"Line {index}:",
                                       f"invalid display mode '{value}'")
-                values[key] = value
+                values[key] = value.upper()
+            ft_validate_config(values)
+    return ft_build_config(values)
 
 
 def main() -> None:
@@ -121,7 +175,8 @@ def main() -> None:
         print("Usage: python a_maze_ing.py <config_file>")
         sys.exit(1)
     try:
-        ft_parse_config(sys.argv[1])
+        config = ft_parse_config(sys.argv[1])
+        print(f"config : {config.__dict__})")
     except FileNotFoundError:
         print("Error: configuration file not found", file=sys.stderr)
         sys.exit(1)

@@ -1,0 +1,17 @@
+# Maze configuration file
+# Lines starting with '#' are comments
+
+WIDTH=20           # Maze width (number of cells)
+HEIGHT=15          # Maze height (number of cells)
+
+ENTRY=0,0          # Coordinates of maze entrance (x,y)
+EXIT=19,14         # Coordinates of maze exit (x,y)
+
+OUTPUT_FILE=maze.txt   # Output file name
+
+PERFECT=True       # Whether the maze is perfect (only one path from ENTRY to EXIT)
+
+# Optional keys
+SEED=12345         # Random seed for reproducibility
+ALGORITHM=dfs      # Maze generation algorithm: dfs, prim, kruskal, recursive_backtracker
+DISPLAY_MODE=ascii # Display mode: ascii, graphical

@@ -180,13 +180,14 @@ from mazegen import MazeGenerator
     3. ✅ bad syntax:
         - ✅ line doesnt contian "="
     4. ❌ impossible maze parameters:
-    5. ❌ the ENTRY and EXIT values mast be logic values
-    6. ❌ the ENTRY and EXIT values mast be deffrent
+    5. ✅ the ENTRY and EXIT values mast be logic values
+    6. ✅ the ENTRY and EXIT values mast be deffrent
     7. ✅ handle Permission Error
     8. ✅ handle duplicate key
     9. ❌ handle incorrect values
     10. ✅ skip comments
     11. ✅ skip Empty lines
+    11. ✅ missing requierd keys
     16. etc. 
     - It must never crash unexpectedly, and must always provide a clear error message to the user.
 3. generate valid maze:
