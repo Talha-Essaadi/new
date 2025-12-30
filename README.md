@@ -90,12 +90,12 @@ def main():
 │   └── default_config.txt
 ├── mazegen/                   # Reusable package
 │   ├── __init__.py
-│   ├── generator.py           # MazeGenerator (CORE)
-│   ├── cell.py                # MazeCell abstraction
-│   ├── grid.py                # MazeGrid (2D structure)
+│   ├── ✅generator.py           # MazeGenerator (CORE)
+│   ├── ✅cell.py                # MazeCell abstraction
+│   ├── ✅grid.py                # MazeGrid (2D structure)
 │   ├── algorithms.py          # DFS / Prim / Kruskal
-│   ├── solver.py              # Shortest path logic
-│   ├── encoder.py             # Hex encoding logic
+│   ├── ✅solver.py              # Shortest path logic
+│   ├── ✅encoder.py             # Hex encoding logic
 │   ├── exceptions.py          # Custom errors
 │   └── types.py               # Shared typing aliases
 ├── display/
@@ -212,6 +212,14 @@ from mazegen import MazeGenerator
     For example, you can have 2x3 or 3x2 open area, but never a 3x3 open area.
     5. • If the PERFECT flag is activated, the maze must contain exactly one path between
     the entry and the exit (i.e., it must be a perfect maze).
+4. delete neighbors closed walls
+5. output file:
+    - West , South , East, North
+    - open take 0
+    - close take 1
+    - 0011 mean weat and south are open
+6. test
+    1101, 0011, 1001, 1001, 0011, 1101, 0011
 
 ```py
 def main() -> None:
