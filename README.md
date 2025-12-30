@@ -148,7 +148,7 @@ class MazeGenerator:
 --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
 ```
 9. know `pytest` and `unittest`
-10. what is virutal envirenmment in python ? (venv , conda)
+10. ✅ what is virutal envirenmment in python ? (venv , conda)
 11. what is MiniLibX ? MiniLibX (MLX) Library
 12. explain this :
     debug: Run the main script in debug mode using Python’s built-in debugger (e.g.,
@@ -159,8 +159,8 @@ mypy . --strict
 ```
 14. ✅ explain Docstrings (PEP 257)
 15. explain this Terminal ASCII rendering or MLX graphical display
-16. what this mean : no 3×3 open areas
-17. what happen when i write and mazegen is a folder:
+16. ✅ what this mean : no 3×3 open areas
+17. ✅ what happen when i write and mazegen is a folder:
 ```py
 from mazegen import MazeGenerator
 ```
@@ -230,3 +230,30 @@ EXIT        | EXIT=19,14
 OUTPUT_FILE | OUTPUT_FILE=maze.txt
 PERFECT     | PERFECT=True
 ```
+
+# Algorithms:
+1. DFS
+2. HAK
+## Recources
+```
+- https://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking.html
+```
+
+## Apply back tracking
+
+- create the cells and display them
+
+
+1. first start from entry 
+2. create 4 posibilities cells
+    - if cell = (2,5)
+    - 4 posibilities is 
+    (x , y)
+    x for height
+    y for width
+          (1,5)
+    (2,4) (2,5) (2,6)
+          (3,5)
+3. i delete the impossible cells
+4. i delete the visited cells 
+5. i chosse randomlly 1 cell

@@ -1,0 +1,10 @@
+ls /usr/lib/x86_64-linux-gnu/libvulkan.so
+ls /usr/lib/x86_64-linux-gnu/libxcb.so
+ls /usr/lib/x86_64-linux-gnu/libxcb-keysyms.so
+ls /usr/lib/x86_64-linux-gnu/libz.so
+ls /usr/lib/x86_64-linux-gnu/libbsd.so
+ls /usr/include/vulkan/vulkan.h
+ls /usr/include/xcb/xcb.h
+ls /usr/include/xcb/xcb_keysyms.h
+ls /usr/include/zlib.h
+ls /usr/include/bsd/bsd.h
