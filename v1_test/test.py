@@ -7,25 +7,22 @@ apis = ['SYNC_IMAGE_WRITABLE', 'SYNC_WIN_COMPLETED', 'SYNC_WIN_FLUSH', '__class_
 import mlx
 import time
 
-width = 2500
-height = 1500
-blue = 0x000FF
+width = 800
+height = 800
+blue = 0x0000FF
 
 m = mlx.Mlx()
-
 mlx_ptr = m.mlx_init()
-
 win = m.mlx_new_window(mlx_ptr, width, height, "A-Maze-ing")
-
-img = m.mlx_new_image(mlx_ptr, width, height)
 
 for y in range(height):
     for x in range(width):
-        m.mlx_pixel_put(mlx_ptr, img, x, y, blue)
+        m.mlx_pixel_put(mlx_ptr, win, x, y, blue)
 
-m.mlx_put_image_to_window(mlx_ptr, win, img, 0, 0)
-                
-time.sleep(10)
+time.sleep(5)
+
+
+
 
 
 

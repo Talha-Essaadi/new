@@ -3,7 +3,7 @@
 #include	<string.h>
 
 #include	<xcb/xcb.h>
-#include	<xcb/xcb_keysyms.h>
+#include "xcb_keysyms.h"
 #include	"mlx__xcb_internal.h"
 
 #include	"mlx__xcb_wmhints.h"

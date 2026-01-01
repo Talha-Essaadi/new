@@ -45,8 +45,8 @@ check_lib "vulkan" "vulkan-loader-devel"
 check_header "xcb/xcb.h" "libxcbdevel"
 check_lib "xcb" "libxcb-devel"
 
-check_header "xcb/xcb_keysyms.h" "xcb-util-keysyms-devel"
-check_lib "xcb-keysyms" "xcb-util-keysyms-devel"
+# check_header "xcb/xcb_keysyms.h" "xcb-util-keysyms-devel"
+# check_lib "xcb-keysyms" "xcb-util-keysyms-devel"
 
 check_header "vulkan/vulkan_xcb.h" "vulkan-headers"
 

@@ -1,16 +1,28 @@
 import mlx
 import time
 
-# Create MLX instance
-mlx_instance = mlx.Mlx()
+def callaback(*args):
+    print("Exiting...")
+    exit(0)
 
-# Initialize and get MLX pointer
-mlx_ptr = mlx_instance.mlx_init()
+m = mlx.Mlx()
+help(mlx)
 
-# Create window (pass regular string, not bytes)
-win = mlx_instance.mlx_new_window(mlx_ptr, 2000, 1500, "MLX Python Test")
+mlx_ptr = m.mlx_init()
+win = m.mlx_new_window(mlx_ptr, 2000, 1500, "MLX Python Test")
+image = m.mlx_new_image(mlx_ptr, 2000, 1500)
+(data, bpp, sline, endian) = m.mlx_get_data_addr(image)
 
-# Draw a white pixel at (200, 150)
-mlx_instance.mlx_pixel_put(mlx_ptr, win, 200, 150, 0xFFFFFF)
 
-time.sleep(10)
+for y in range(1500):
+    for x in range(2000):
+        offset = y * sline + x * (bpp // 8)
+        data[offset] = 255
+        data[offset + 1] = 255
+        data[offset + 2] = 255
+        data[offset + 3] = 255
+
+m.mlx_put_image_to_window(mlx_ptr, win, image, 0, 0)
+
+m.mlx_hook(win, 2 , 1, callaback, m)
+m.mlx_loop(mlx_ptr)

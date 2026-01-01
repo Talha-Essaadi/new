@@ -11,7 +11,7 @@
 
 #if defined MLX_BACKEND && MLX_BACKEND == MLX_BACKEND_XCB
 #include	<xcb/xcb.h>
-#include	<xcb/xcb_keysyms.h>
+#include "../backend/xcb_keysyms.h"
 #include	<vulkan/vulkan_xcb.h>
 #include	"backend/mlx__xcb_internal.h"
 #endif
